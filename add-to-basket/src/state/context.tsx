@@ -2,39 +2,30 @@ import React, { createContext, useReducer } from 'react';
 
 // @types
 type InitialStateType = {
-  products: IProduct[];
-  basket: string[];
+  basket: { info: IProductInfo; inBasket: number }[];
 };
 
-export interface IProduct {
+export interface IProductInfo {
   id: string;
   name: string;
   thumbnail: string;
   price: number;
 }
 
-export type StateActions = {
-  type: 'ADD_TO_BASKET';
-  payload: IProduct;
-};
+export type StateActions =
+  | {
+      type: 'ADD_TO_BASKET';
+      payload: { info: IProductInfo; units?: number };
+    }
+  | {
+      type: 'REMOVE_FROM_BASKET';
+      payload: { id: string };
+    }
+  | {
+      type: 'CLEAR_BASKET';
+    };
 
 const initialState = {
-  products: [
-    {
-      id: '0000001',
-      name: 'Face Mask',
-      thumbnail:
-        'https://images.unsplash.com/photo-1589091683318-a10f065d844a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80',
-      price: 2.5,
-    },
-    {
-      id: '0000002',
-      name: 'Toilet Paper',
-      thumbnail:
-        'https://images.unsplash.com/photo-1633002161416-8e2fafa0996b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80',
-      price: 0.65,
-    },
-  ],
   basket: [],
 };
 
@@ -49,8 +40,40 @@ const AppContext = createContext<{
 const appReducer = (state: InitialStateType, action: StateActions) => {
   switch (action.type) {
     case 'ADD_TO_BASKET':
+      let payload = state.basket;
+      if (
+        payload.find((product) => product.info.id === action.payload.info.id)
+      ) {
+        payload = payload.map((product) => {
+          if (product.info.id === action.payload.info.id) {
+            return {
+              ...product,
+              inBasket: action.payload.units || product.inBasket + 1,
+            };
+          }
+          return product;
+        });
+      } else {
+        payload.push({
+          info: action.payload.info,
+          inBasket: action.payload.units || 1,
+        });
+      }
       return {
         ...state,
+        basket: payload,
+      };
+    case 'REMOVE_FROM_BASKET':
+      return {
+        ...state,
+        basket: state.basket.filter(
+          (product) => product.info.id !== action.payload.id
+        ),
+      };
+    case 'CLEAR_BASKET':
+      return {
+        ...state,
+        basket: [],
       };
     default:
       return state;

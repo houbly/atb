@@ -1,5 +1,6 @@
 import React from 'react';
-import { AppContext } from './state/context';
+import products from './products';
+
 import Header from './components/Header';
 import Basket from './components/Basket';
 import Product from './components/Product';
@@ -10,8 +11,6 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
 function App() {
-  const { state } = React.useContext(AppContext);
-  const { products } = state;
   return (
     <div>
       <Box>
@@ -30,7 +29,7 @@ function App() {
             </Grid>
           </Grid>
           <Grid item xs={12} md={4}>
-            <Basket>Basket content</Basket>
+            <Basket />
           </Grid>
         </Grid>
       </Container>
