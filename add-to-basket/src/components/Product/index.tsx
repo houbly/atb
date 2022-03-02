@@ -6,9 +6,7 @@ import CardActions from '@mui/material/CardActions';
 import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
-
-const priceFormat = (price: number) =>
-  price < 1 ? `${price * 100}p` : `£${price.toFixed(2)}`;
+import formatPrice from '../../helpers/formatPrice';
 
 const Product = ({ product }: { product: IProductInfo }) => {
   const { id, name, price, thumbnail } = product;
@@ -27,15 +25,12 @@ const Product = ({ product }: { product: IProductInfo }) => {
           {name}
         </Typography>
         <Typography variant="h5" component="div" color="text.secondary">
-          {priceFormat(price)}
+          {formatPrice(price)}
         </Typography>
       </CardContent>
       <CardActions>
         <Button size="large" onClick={addToBasket}>
           Add to basket
-        </Button>
-        <Button size="large" onClick={removeFromBasket}>
-          remove
         </Button>
       </CardActions>
     </Card>
