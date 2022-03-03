@@ -14,12 +14,14 @@ const ProductSummary = ({
   thumbnail,
   quantity,
   onDelete,
+  fullPrice,
 }: {
   name: string;
   price: string;
   thumbnail: string;
   quantity: number;
   onDelete: () => void;
+  fullPrice: string;
 }) => {
   return (
     <>
@@ -34,6 +36,7 @@ const ProductSummary = ({
         <ListItemAvatar>
           <Avatar alt={name} src={thumbnail} />
         </ListItemAvatar>
+
         <ListItemText
           primary={`${name} x ${quantity}`}
           secondary={
@@ -43,7 +46,15 @@ const ProductSummary = ({
               variant="body2"
               color="text.primary"
             >
-              {price}
+              <strong>{price}</strong>{' '}
+              <Box
+                sx={{ display: 'inline', textDecoration: 'line-through' }}
+                component="span"
+                color="primary.dark"
+                ml={1}
+              >
+                {price !== fullPrice && fullPrice}
+              </Box>
             </Typography>
           }
         />

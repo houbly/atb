@@ -5,10 +5,10 @@ import groupDiscount from '../../../helpers/discount';
 const useBasketTotal = () => {
   const { state } = useContext(AppContext);
   const { basket } = state;
-  const basketTotal = () => {
-    if (!basket.length) return;
+  const basketTotal = (useDiscount?: boolean) => {
+    if (!basket.length) return 0;
     const totals = basket.map((item) => {
-      if (item.info.groupDiscount) {
+      if (item.info.groupDiscount && useDiscount) {
         return groupDiscount(
           item.inBasket,
           item.info.price,
@@ -22,7 +22,7 @@ const useBasketTotal = () => {
       (previousValue, currentValue) => previousValue + currentValue
     );
   };
-  return basketTotal();
+  return basketTotal;
 };
 
 export default useBasketTotal;

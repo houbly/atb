@@ -30,7 +30,7 @@ function App() {
             />
             <Grid container spacing={4}>
               {products.map((product) => (
-                <Grid item xs={12} md={6} key={product.id}>
+                <Grid item xs={12} sm={6} key={product.id}>
                   <Product product={product} />
                 </Grid>
               ))}

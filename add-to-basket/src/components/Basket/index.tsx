@@ -81,13 +81,28 @@ const Basket = () => {
                       payload: info.id,
                     })
                   }
+                  fullPrice={formatPrice(info.price * inBasket)}
                 />
               ))}
             </List>
             <Box p={2}>
-              <Box fontWeight={400} fontSize="1.25rem">
-                Total:{' '}
-                <strong>{basketTotal && formatPrice(basketTotal)}</strong>
+              <Box
+                fontWeight={400}
+                fontSize="1.25rem"
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                }}
+              >
+                <span>
+                  Total: <strong>{formatPrice(basketTotal(true))}</strong>
+                </span>
+                {basketTotal() !== basketTotal(true) && (
+                  <Box fontWeight={700} fontSize="1rem" color="text.secondary">
+                    You save {formatPrice(basketTotal() - basketTotal(true))}
+                  </Box>
+                )}
               </Box>
               <Divider sx={{ marginTop: 2, marginBottom: 2 }} />
               <Stack direction="row" alignItems="center" spacing={2}>
