@@ -10,6 +10,11 @@ export interface IProductInfo {
   name: string;
   thumbnail: string;
   price: number;
+  groupDiscount?: {
+    groupQuantity: number;
+    groupPrice: number;
+    description?: string;
+  };
 }
 
 export type StateActions =
