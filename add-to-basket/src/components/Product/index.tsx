@@ -14,11 +14,8 @@ const Product = ({ product }: { product: IProductInfo }) => {
   const addToBasket = () => {
     dispatch({ type: 'ADD_TO_BASKET', payload: { info: product } });
   };
-  const removeFromBasket = () => {
-    dispatch({ type: 'REMOVE_FROM_BASKET', payload: { id } });
-  };
   return (
-    <Card variant="outlined">
+    <Card variant="outlined" id={id}>
       <CardMedia component="img" alt={name} image={thumbnail} />
       <CardContent>
         <Typography gutterBottom variant="h4" component="div">

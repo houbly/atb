@@ -20,11 +20,11 @@ export interface IProductInfo {
 export type StateActions =
   | {
       type: 'ADD_TO_BASKET';
-      payload: { info: IProductInfo; units?: number };
+      payload: { info: IProductInfo };
     }
   | {
       type: 'REMOVE_FROM_BASKET';
-      payload: { id: string };
+      payload: string;
     }
   | {
       type: 'CLEAR_BASKET';
@@ -53,7 +53,7 @@ const appReducer = (state: InitialStateType, action: StateActions) => {
           if (product.info.id === action.payload.info.id) {
             return {
               ...product,
-              inBasket: action.payload.units || product.inBasket + 1,
+              inBasket: product.inBasket + 1,
             };
           }
           return product;
@@ -61,7 +61,7 @@ const appReducer = (state: InitialStateType, action: StateActions) => {
       } else {
         payload.push({
           info: action.payload.info,
-          inBasket: action.payload.units || 1,
+          inBasket: 1,
         });
       }
       return {
@@ -72,7 +72,7 @@ const appReducer = (state: InitialStateType, action: StateActions) => {
       return {
         ...state,
         basket: state.basket.filter(
-          (product) => product.info.id !== action.payload.id
+          (product) => product.info.id !== action.payload
         ),
       };
     case 'CLEAR_BASKET':

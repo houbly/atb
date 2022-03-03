@@ -5,6 +5,8 @@ import formatPrice from '../../helpers/formatPrice';
 import groupDiscount from '../../helpers/discount';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import List from '@mui/material/List';
+import ProductSummary from './partials/ProductSummary';
 
 const Basket = () => {
   const { state, dispatch } = useContext(AppContext);
@@ -20,27 +22,33 @@ const Basket = () => {
         <span>Your basket is empty</span>
       ) : (
         <>
-          {basket.map(({ info, inBasket }) => (
-            <div>
-              {info.name}
-              <br />
-              {formatPrice(info.price * inBasket)}
-              {info.groupDiscount && (
-                <span>
-                  {formatPrice(
-                    groupDiscount(
-                      inBasket,
-                      info.price,
-                      info.groupDiscount.groupQuantity,
-                      info.groupDiscount.groupPrice
-                    )
-                  )}
-                </span>
-              )}
-              <br />
-              #in basket:
-            </div>
-          ))}
+          <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
+            {basket.map(({ info, inBasket }) => (
+              <ProductSummary
+                name={info.name}
+                price={
+                  info.groupDiscount
+                    ? formatPrice(
+                        groupDiscount(
+                          inBasket,
+                          info.price,
+                          info.groupDiscount.groupQuantity,
+                          info.groupDiscount.groupPrice
+                        )
+                      )
+                    : formatPrice(info.price * inBasket)
+                }
+                thumbnail={info.thumbnail}
+                quantity={inBasket}
+                onDelete={() =>
+                  dispatch({
+                    type: 'REMOVE_FROM_BASKET',
+                    payload: info.id,
+                  })
+                }
+              />
+            ))}
+          </List>
           <div>Total: {basketTotal && formatPrice(basketTotal)}</div>
           <Button onClick={clearBasket}>Checkout</Button>
           <Button onClick={clearBasket}>Empty basket</Button>
