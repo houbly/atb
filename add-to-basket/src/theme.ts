@@ -33,6 +33,19 @@ const theme = createTheme({
         },
       },
     },
+    MuiCard: {
+      defaultProps: {
+        elevation: 0,
+        variant: 'outlined',
+      },
+      styleOverrides: {
+        root: {
+          borderRadius: '0.65rem',
+          borderColor: '#eee',
+          borderWidth: 2,
+        },
+      },
+    },
   },
 });
 

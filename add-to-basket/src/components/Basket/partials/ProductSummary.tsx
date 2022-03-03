@@ -1,6 +1,7 @@
-import DeleteIcon from '@mui/icons-material/DeleteOutlined';
+import DeleteIcon from '@mui/icons-material/ClearOutlined';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
+import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
@@ -21,21 +22,21 @@ const ProductSummary = ({
   onDelete: () => void;
 }) => {
   return (
-    <ListItem
-      alignItems="flex-start"
-      secondaryAction={
-        <IconButton onClick={onDelete} edge="end" aria-label="delete">
-          <DeleteIcon />
-        </IconButton>
-      }
-    >
-      <ListItemAvatar>
-        <Avatar alt={name} src={thumbnail} />
-      </ListItemAvatar>
-      <ListItemText
-        primary={name}
-        secondary={
-          <>
+    <>
+      <ListItem
+        alignItems="flex-start"
+        secondaryAction={
+          <IconButton onClick={onDelete} edge="end" aria-label="delete">
+            <DeleteIcon />
+          </IconButton>
+        }
+      >
+        <ListItemAvatar>
+          <Avatar alt={name} src={thumbnail} />
+        </ListItemAvatar>
+        <ListItemText
+          primary={`${name} x ${quantity}`}
+          secondary={
             <Typography
               sx={{ display: 'inline' }}
               component="span"
@@ -44,11 +45,11 @@ const ProductSummary = ({
             >
               {price}
             </Typography>
-            <Box>{quantity}</Box>
-          </>
-        }
-      />
-    </ListItem>
+          }
+        />
+      </ListItem>
+      <Divider />
+    </>
   );
 };
 

@@ -5,7 +5,6 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardMedia from '@mui/material/CardMedia';
-import CardContent from '@mui/material/CardContent';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
@@ -19,14 +18,7 @@ const Product = ({ product }: { product: IProductInfo }) => {
   };
   const inBasket = state.basket.find((item) => item.info.id === product.id);
   return (
-    <Card
-      variant="outlined"
-      id={id}
-      sx={{
-        borderRadius: 3,
-        borderWidth: 2,
-      }}
-    >
+    <Card id={id}>
       <CardMedia component="img" alt={name} image={thumbnail} />
       <Box sx={{ padding: '1rem' }}>
         <Typography variant="subtitle1" component="div">
